@@ -1,41 +1,41 @@
 # Guide d'installation (hors ligne)
 
 Installation 100 % hors ligne sur macOS Apple Silicon, sans droit administrateur.
-Le processus se fait en deux temps : on **prépare le kit** sur une machine
-connectée, puis on **installe sur la cible** (hors ligne).
+Tout le nécessaire est fourni dans les **Releases** GitHub : il suffit de deux
+téléchargements, puis l'app se construit **localement sur la cible** (ce qui
+évite la quarantaine Gatekeeper).
 
 ## Prérequis
 
-- Machine de préparation : Mac Apple Silicon **connecté à Internet**.
 - Cible : Mac Apple Silicon **macOS >= 14.0**, avec le `python3` d'Apple
   (`/usr/bin/python3`, présent par défaut). Aucun admin, aucun Homebrew requis.
+- Les deux téléchargements peuvent se faire depuis n'importe quelle machine puis
+  être transférés sur la cible (USB ou partage interne).
 
-## Étape 1 — Préparer le kit (machine connectée)
+## Étape 1 — Télécharger le kit et le pack
+
+Depuis les **Releases** du dépôt https://github.com/Mediatros/Jactance :
+
+1. `jactance-kit.zip` (release `kit-v1`, ~113 Mo) : code, scripts et toutes les
+   dépendances pré-collectées (`vendor/wheels/` et `vendor/build-wheels/`).
+2. `fr-pack.zip` (release `fr-pack-v1`, ~1,5 Go) : le pack de données (modèle).
+
+Décompresser le kit, puis y déposer le pack :
 
 ```bash
-git clone https://github.com/Mediatros/Jactance.git
-cd Jactance
-
-# Wheels des dépendances (runtime + build), avec le MÊME Python que la cible
-PYTHON_BIN=/usr/bin/python3 ./collect_wheels.sh         # -> vendor/wheels/
-PYTHON_BIN=/usr/bin/python3 ./collect_build_wheels.sh   # -> vendor/build-wheels/
+unzip jactance-kit.zip            # -> dossier Jactance/
+unzip fr-pack.zip -d Jactance/assets/
 ```
 
-> Important : forcer `/usr/bin/python3` (3.9). Avec un autre `python3` (ex.
-> Homebrew), les wheels seraient incompatibles avec la cible.
+On doit obtenir `Jactance/assets/fr-pack/config.json` et
+`Jactance/assets/fr-pack/weights.safetensors`.
 
-Récupérer ensuite le **pack de données** (modèle, ~1,5 Go, hors dépôt) :
+> Les fichiers issus d'un téléchargement portent le tag quarantaine, mais cela
+> ne gêne ni `pip` ni Python : seules les **apps** lancées en double-clic sont
+> filtrées par Gatekeeper. L'app finale étant **construite sur place**, elle ne
+> porte pas ce tag.
 
-1. Télécharger `fr-pack.zip` depuis les **Releases** GitHub du dépôt.
-2. Décompresser dans `assets/` : on doit obtenir `assets/fr-pack/config.json`
-   et `assets/fr-pack/weights.safetensors`.
-
-Le kit à transférer = le dossier du projet avec `vendor/wheels/`,
-`vendor/build-wheels/` et `assets/fr-pack/`.
-
-## Étape 2 — Installer sur la cible (hors ligne)
-
-Transférer le kit sur la cible (USB ou partage interne), puis :
+## Étape 2 — Installer et construire sur la cible (hors ligne)
 
 ```bash
 cd Jactance
@@ -68,9 +68,27 @@ Gatekeeper, donc pas de blocage ni d'admin.
 
 ## En cas de problème
 
-- « dossier de wheels absent » : l'étape 1 n'a pas été faite ou le dossier
-  `vendor/` n'a pas été transféré.
+- « dossier de wheels absent » : le `vendor/` du kit n'a pas été décompressé au
+  bon endroit (il doit être à côté de `install_offline.sh`).
 - « Modèle introuvable / incomplet » : `assets/fr-pack/` manque `config.json`
   ou `weights.safetensors`.
 - App qui ne s'ouvre pas malgré le build local : possible politique MDM/EDR
   au-dessus de Gatekeeper ; utiliser la voie B (`./run.sh`).
+
+## Annexe — Régénérer le kit soi-même (mainteneur)
+
+Pour reconstruire `jactance-kit.zip` à partir des sources, sur un Mac Apple
+Silicon **connecté** :
+
+```bash
+git clone https://github.com/Mediatros/Jactance.git
+cd Jactance
+PYTHON_BIN=/usr/bin/python3 ./collect_wheels.sh         # -> vendor/wheels/
+PYTHON_BIN=/usr/bin/python3 ./collect_build_wheels.sh   # -> vendor/build-wheels/
+```
+
+> Important : forcer `/usr/bin/python3` (3.9). Avec un autre `python3` (ex.
+> Homebrew), les wheels seraient incompatibles avec la cible.
+
+Le kit = le dossier du projet avec `vendor/wheels/` et `vendor/build-wheels/`
+(le pack de données reste distribué à part).
