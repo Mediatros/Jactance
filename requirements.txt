@@ -1,0 +1,10 @@
+# Dépendances Python de la dictée locale (versions épinglées).
+# Le modèle Whisper N'EST PAS une dépendance pip : il est ajouté manuellement
+# dans models/ (voir install_offline.sh).
+# Installation hors ligne via wheels locales : voir collect_wheels.sh / install_offline.sh.
+mlx-whisper==0.4.3
+numpy==2.4.6
+sounddevice==0.5.5
+pyperclip==1.11.0
+rumps==0.4.0
+pyobjc-framework-Quartz==12.2.1

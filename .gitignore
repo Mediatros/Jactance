@@ -1,0 +1,39 @@
+# Environnement Python
+.venv/
+__pycache__/
+*.pyc
+
+# Modèle et archives volumineuses (dissociés du dépôt, ajoutés manuellement)
+models/
+*.zip
+
+# Wheels collectées pour l'installation hors ligne (régénérées via collect_wheels.sh)
+vendor/
+
+# Config locale Claude Code
+.claude/
+
+# macOS
+.DS_Store
+
+# Gestion de projet (MyProjectOS) — local uniquement, hors produit final
+CLAUDE.md
+PROJECT.md
+PROGRESS.md
+TASKS.md
+CHANGELOG.md
+DECISIONS.md
+CONSTITUTION.md
+STACK_VALIDATION.md
+ARCHITECTURE.md
+SPECS.md
+TEST_PLAN.md
+IMPACT_ANALYSIS.md
+AGENTS.md
+RELEASE.md
+anatomy.md
+Projet1.txt
+00_inbox/
+
+# Prototype / validation (hors produit final)
+prototype/
