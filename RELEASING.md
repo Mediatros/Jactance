@@ -1,5 +1,9 @@
 # Versionnage et publication
 
+> Règle figée : chaque évolution de l'appli donne lieu à une release `vX.Y.Z`
+> publiant **les deux approches** (application pré-buildée `Jactance.app.zip` ET
+> kit sources `jactance-kit.zip`). Voir aussi `CLAUDE.md`.
+
 ## Schéma de version (SemVer)
 
 Tags au format `vMAJEUR.MINEUR.CORRECTIF` :
