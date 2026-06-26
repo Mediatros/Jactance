@@ -13,6 +13,15 @@ PYTHON_BIN="${PYTHON_BIN:-python3}"
 mkdir -p "$WHEELS"
 "$PYTHON_BIN" -m pip download -r requirements.txt -d "$WHEELS"
 
+# torch (et ses dépendances exclusives sympy/networkx/mpmath) est tiré par
+# mlx-whisper mais JAMAIS utilisé au runtime : transcribe() n'active pas
+# word_timestamps, seul cas où Whisper appelle torch. Vérifié empiriquement.
+# On le retire du kit (gain ~340 Mo). L'install se fait ensuite en --no-deps.
+# Voir DEC-0013.
+for pkg in torch sympy networkx mpmath; do
+  find "$WHEELS" -maxdepth 1 -iname "${pkg}-*" -delete
+done
+
 echo
-echo "Wheels collectées dans $WHEELS."
+echo "Wheels collectées dans $WHEELS (torch exclu, DEC-0013)."
 echo "Embarquez ce dossier dans le kit (le modèle reste à fournir séparément)."

@@ -26,7 +26,12 @@ if [ ! -d "$VENV" ]; then
 fi
 
 # 3. Installer les dépendances strictement hors ligne.
-"$VENV/bin/python" -m pip install --no-index --find-links "$WHEELS" -r requirements.txt
+# --no-deps : on installe EXACTEMENT les wheels présentes dans le kit, sans
+# laisser pip résoudre les métadonnées. mlx-whisper déclare torch en dépendance,
+# mais torch est volontairement absent (inutile au runtime, DEC-0013) ; sans
+# --no-deps, pip l'exigerait et l'installation échouerait hors ligne. vendor/wheels
+# contient déjà l'ensemble résolu (torch exclu) produit par collect_wheels.sh.
+"$VENV/bin/python" -m pip install --no-index --no-deps "$WHEELS"/*
 
 # 4. Vérifier le modèle SANS l'installer ni le télécharger.
 echo

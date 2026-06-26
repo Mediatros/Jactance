@@ -4,6 +4,8 @@ Enregistre en mono 16 kHz float32 (format attendu par Whisper, évite ffmpeg).
 Modèle start/stop : démarrer au maintien de la touche, arrêter au relâchement,
 récupérer le buffer concaténé.
 """
+from __future__ import annotations
+
 import numpy as np
 import sounddevice as sd
 

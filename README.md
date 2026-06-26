@@ -31,6 +31,12 @@ préparer au préalable sur une machine connectée :
 ./collect_wheels.sh    # télécharge les wheels dans vendor/wheels/
 ```
 
+`collect_wheels.sh` retire du kit `torch` et ses dépendances exclusives
+(`sympy`, `networkx`, `mpmath`) : elles sont tirées par le moteur de
+transcription mais jamais utilisées à l'exécution (pas d'horodatage mot à mot),
+ce qui allège le kit d'environ 340 Mo. L'installation se fait donc en
+`--no-deps` (le détail et la justification sont dans `DECISIONS.md`, DEC-0013).
+
 ## Pack de données (ajout manuel)
 
 Le pack de transcription est **dissocié** de l'installation et n'est pas inclus

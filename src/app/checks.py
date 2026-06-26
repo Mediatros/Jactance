@@ -3,6 +3,8 @@
 En cas de composant manquant, renvoie un message explicite. Ne tente jamais
 de récupérer ou télécharger quoi que ce soit (contrainte airgap).
 """
+from __future__ import annotations
+
 from src.config import MODEL_DIR, SAMPLE_RATE
 
 
