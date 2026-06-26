@@ -16,7 +16,7 @@ téléchargements, puis l'app se construit **localement sur la cible** (ce qui
 
 Depuis les **Releases** du dépôt https://github.com/Mediatros/Jactance :
 
-1. `jactance-kit.zip` (release `kit-v1`, ~113 Mo) : code, scripts et toutes les
+1. `jactance-kit.zip` (release `kit-v2`, ~113 Mo) : code, scripts et toutes les
    dépendances pré-collectées (`vendor/wheels/` et `vendor/build-wheels/`).
 2. `fr-pack.zip` (release `fr-pack-v1`, ~1,5 Go) : le pack de données (modèle).
 
@@ -83,12 +83,13 @@ Silicon **connecté** :
 ```bash
 git clone https://github.com/Mediatros/Jactance.git
 cd Jactance
-PYTHON_BIN=/usr/bin/python3 ./collect_wheels.sh         # -> vendor/wheels/
-PYTHON_BIN=/usr/bin/python3 ./collect_build_wheels.sh   # -> vendor/build-wheels/
+./collect_wheels.sh         # -> vendor/wheels/
+./collect_build_wheels.sh   # -> vendor/build-wheels/
 ```
 
-> Important : forcer `/usr/bin/python3` (3.9). Avec un autre `python3` (ex.
-> Homebrew), les wheels seraient incompatibles avec la cible.
+> Les scripts utilisent par défaut le `python3` d'Apple (3.9) pour produire des
+> wheels cp39 compatibles avec la cible. Pour cibler un autre Python, surcharger
+> avec `PYTHON_BIN=...`.
 
 Le kit = le dossier du projet avec `vendor/wheels/` et `vendor/build-wheels/`
 (le pack de données reste distribué à part).

@@ -10,7 +10,10 @@ cd "$(dirname "$0")"
 
 VENV=".venv"
 WHEELS="vendor/wheels"
-PYTHON_BIN="${PYTHON_BIN:-python3}"
+# Par défaut le python3 d'Apple (3.9), seul compatible avec les wheels cp39 du
+# kit. Sur une machine avec Homebrew, `python3` viserait une autre version et
+# l'install échouerait ; on peut tout de même surcharger via PYTHON_BIN.
+PYTHON_BIN="${PYTHON_BIN:-/usr/bin/python3}"
 MODEL_DIR="assets/fr-pack"
 
 # 1. Wheels embarquées requises (aucun téléchargement réseau n'est autorisé).
@@ -23,6 +26,15 @@ fi
 # 2. Créer le venv s'il n'existe pas (ne pas écraser un venv existant).
 if [ ! -d "$VENV" ]; then
   "$PYTHON_BIN" -m venv "$VENV"
+fi
+
+# 2b. Garde-fou : le kit est en wheels cp39, le venv DOIT être en Python 3.9.
+PYV="$("$VENV/bin/python" -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")' 2>/dev/null || true)"
+if [ "$PYV" != "3.9" ]; then
+  echo "ERREUR : le venv $VENV est en Python ${PYV:-inconnu}, or le kit exige 3.9 (wheels cp39)." >&2
+  echo "Supprimez-le et relancez avec le python3 d'Apple :" >&2
+  echo "  rm -rf $VENV && PYTHON_BIN=/usr/bin/python3 ./install_offline.sh" >&2
+  exit 1
 fi
 
 # 3. Installer les dépendances strictement hors ligne.

@@ -9,7 +9,8 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 WHEELS="vendor/build-wheels"
-PYTHON_BIN="${PYTHON_BIN:-python3}"
+# Défaut : python3 d'Apple (3.9), même Python que la cible. Surchargeable.
+PYTHON_BIN="${PYTHON_BIN:-/usr/bin/python3}"
 
 mkdir -p "$WHEELS"
 "$PYTHON_BIN" -m pip download -r requirements-build.txt -d "$WHEELS"
