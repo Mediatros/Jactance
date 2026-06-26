@@ -1,3 +1,5 @@
-# Dépendances de BUILD uniquement (packaging .app), à installer sur le Mac
-# connecté qui fabrique le kit. Non requises au runtime sur la cible airgap.
+# Dépendances de BUILD uniquement (packaging .app). Le build a lieu LOCALEMENT
+# sur la cible, hors ligne (DEC-0014), pour éviter le tag quarantaine. Ces wheels
+# sont donc embarquées dans le kit (collect_build_wheels.sh) et installées sur la
+# cible par build_app.sh. Non requises au runtime de l'app.
 pyinstaller==6.21.0

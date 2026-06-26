@@ -19,6 +19,9 @@ annuler. Détection par sondage d'état clavier, sans aucune permission système
 
 ## Installation (hors ligne)
 
+Guide pas à pas (préparation du kit puis installation sur la cible) : voir
+[`INSTALL.md`](INSTALL.md).
+
 ```bash
 ./install_offline.sh   # crée le venv et installe les dépendances depuis vendor/wheels
 ./run.sh               # lance l'application
@@ -36,6 +39,23 @@ préparer au préalable sur une machine connectée :
 transcription mais jamais utilisées à l'exécution (pas d'horodatage mot à mot),
 ce qui allège le kit d'environ 340 Mo. L'installation se fait donc en
 `--no-deps` (le détail et la justification sont dans `DECISIONS.md`, DEC-0013).
+
+## Application autonome (.app construite localement)
+
+Sur un Mac managé, une `.app` *téléchargée* est bloquée par la quarantaine
+Gatekeeper. Une `.app` **construite localement** ne porte pas ce tag et se lance
+sans admin ni notarisation. On la fabrique donc sur place, hors ligne :
+
+```bash
+./collect_build_wheels.sh   # machine connectée : wheels PyInstaller -> vendor/build-wheels/
+./install_offline.sh        # cible : venv runtime
+./build_app.sh              # cible : pyinstaller -> dist/Jactance.app
+```
+
+Placer ensuite le pack à côté de l'app (`dist/assets/fr-pack/`) puis lancer
+`dist/Jactance.app` par double-clic. L'exécution directe depuis les sources
+(`./run.sh`) reste disponible en repli. Détail et réserves (politique MDM) dans
+`DECISIONS.md`, DEC-0014.
 
 ## Pack de données (ajout manuel)
 
