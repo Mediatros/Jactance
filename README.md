@@ -2,15 +2,15 @@
 
 Dictée vocale française **100 % hors ligne** pour macOS Apple Silicon (M1 à M5).
 
-Maintien d'une bascule clavier, parole, transcription locale via Whisper MLX,
-copie automatique dans le presse-papiers (collage `⌘V` manuel). Conçue pour un
-environnement airgap : aucun accès réseau, aucun droit administrateur, tout est
-embarqué et exécutable depuis une clé USB.
+Maintien d'une bascule clavier, parole, transcription locale, copie automatique
+dans le presse-papiers (collage `⌘V` manuel). Conçue pour un environnement
+airgap : aucun accès réseau, aucun droit administrateur, tout est embarqué et
+exécutable depuis une clé USB.
 
 ## Principe
 
 ```
-Micro -> capture audio (16 kHz mono) -> Whisper MLX (large-v3-turbo)
+Micro -> capture audio (16 kHz mono) -> moteur de transcription local
       -> nettoyage texte -> presse-papiers -> ⌘V manuel
 ```
 
@@ -31,27 +31,28 @@ préparer au préalable sur une machine connectée :
 ./collect_wheels.sh    # télécharge les wheels dans vendor/wheels/
 ```
 
-## Modèle (ajout manuel)
+## Pack de données (ajout manuel)
 
-Le modèle est **dissocié** de l'installation et n'est pas inclus dans ce dépôt
-(volumineux, ~1,5 Go). Il s'ajoute manuellement :
+Le pack de transcription est **dissocié** de l'installation et n'est pas inclus
+dans ce dépôt (volumineux, ~1,5 Go). Il est fourni en pièce jointe d'une
+**Release** GitHub et s'ajoute manuellement :
 
-1. Récupérer l'archive du modèle `whisper-large-v3-turbo`.
-2. Placer le dossier dans `models/` :
+1. Télécharger l'archive `fr-pack.zip` depuis les Releases du dépôt.
+2. Décompresser et placer le dossier dans `assets/` :
 
    ```
-   models/
-   └── whisper-large-v3-turbo/
+   assets/
+   └── fr-pack/
        ├── config.json
        └── weights.safetensors
    ```
 
 Le dossier doit contenir au minimum `config.json` ET `weights.safetensors`.
-En cas de modèle absent ou incomplet, l'application affiche un message d'erreur
-explicite au démarrage. **Aucun téléchargement n'est jamais effectué.**
+En cas de pack absent ou incomplet, l'application affiche un message d'erreur
+explicite au démarrage. **Aucun téléchargement n'est jamais effectué par l'app.**
 
 ## Contraintes
 
 - Aucun appel réseau, aucun téléchargement (y compris au premier lancement).
 - Aucun droit administrateur, aucun Homebrew, aucune installation système.
-- macOS >= 14.0 requis par MLX.
+- macOS >= 14.0 requis par le moteur d'inférence.

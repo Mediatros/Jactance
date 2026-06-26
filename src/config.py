@@ -11,7 +11,7 @@ os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-MODEL_DIR = ROOT / "models" / "whisper-large-v3-turbo"
+MODEL_DIR = ROOT / "assets" / "fr-pack"
 
 # Whisper attend du mono 16 kHz float32 ; capter dans ce format évite ffmpeg au runtime.
 SAMPLE_RATE = 16000

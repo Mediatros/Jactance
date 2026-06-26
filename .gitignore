@@ -3,7 +3,8 @@
 __pycache__/
 *.pyc
 
-# Modèle et archives volumineuses (dissociés du dépôt, ajoutés manuellement)
+# Pack de données et archives volumineuses (dissociés du dépôt, ajoutés manuellement)
+assets/fr-pack/
 models/
 *.zip
 

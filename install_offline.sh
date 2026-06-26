@@ -11,7 +11,7 @@ cd "$(dirname "$0")"
 VENV=".venv"
 WHEELS="vendor/wheels"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
-MODEL_DIR="models/whisper-large-v3-turbo"
+MODEL_DIR="assets/fr-pack"
 
 # 1. Wheels embarquées requises (aucun téléchargement réseau n'est autorisé).
 if [ ! -d "$WHEELS" ] || [ -z "$(ls -A "$WHEELS" 2>/dev/null)" ]; then
