@@ -3,6 +3,10 @@
 __pycache__/
 *.pyc
 
+# Artefacts de build PyInstaller
+build/
+dist/
+
 # Pack de données et archives volumineuses (dissociés du dépôt, ajoutés manuellement)
 assets/fr-pack/
 models/

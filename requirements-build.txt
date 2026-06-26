@@ -1,0 +1,3 @@
+# Dépendances de BUILD uniquement (packaging .app), à installer sur le Mac
+# connecté qui fabrique le kit. Non requises au runtime sur la cible airgap.
+pyinstaller==6.21.0
