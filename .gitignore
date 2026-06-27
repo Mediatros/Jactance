@@ -23,25 +23,3 @@ vendor/
 
 # Préférence locale (micro choisi, lancement auto), écrite à côté de l'app
 jactance.prefs.json
-
-# Gestion de projet (MyProjectOS) — local uniquement, hors produit final
-CLAUDE.md
-PROJECT.md
-PROGRESS.md
-TASKS.md
-CHANGELOG.md
-DECISIONS.md
-CONSTITUTION.md
-STACK_VALIDATION.md
-ARCHITECTURE.md
-SPECS.md
-TEST_PLAN.md
-IMPACT_ANALYSIS.md
-AGENTS.md
-RELEASE.md
-anatomy.md
-Projet1.txt
-00_inbox/
-
-# Prototype / validation (hors produit final)
-prototype/
