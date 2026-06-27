@@ -29,6 +29,29 @@ Le modèle suit sa **propre version** (`fr-pack-v1`, `fr-pack-v2`…), indépend
 du code : il est volumineux (~1,5 Go) et change rarement. La compatibilité
 pack ↔ application est indiquée dans les notes de release.
 
+Le zip est structuré pour se décompresser directement en `assets/fr-pack/`
+(aucune création manuelle du dossier `assets/`) et embarque la notice
+`packaging/fr-pack-README.txt`, renommée `README.txt`, à côté du dossier
+`assets/`. Arborescence du zip :
+
+```
+assets/
+└── fr-pack/
+    ├── config.json
+    └── weights.safetensors
+README.txt
+```
+
+Fabrication (le pack n'est pas dans le dépôt) :
+
+```bash
+STAGE=$(mktemp -d)
+mkdir -p "$STAGE/assets"
+cp -R /chemin/vers/fr-pack "$STAGE/assets/fr-pack"
+cp packaging/fr-pack-README.txt "$STAGE/README.txt"
+( cd "$STAGE" && zip -r -q -X fr-pack.zip assets README.txt )
+```
+
 ## Fabriquer une release applicative
 
 Sur un Mac Apple Silicon connecté, depuis un dépôt à jour :

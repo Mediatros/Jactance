@@ -64,7 +64,8 @@ dans ce dépôt (volumineux, ~1,5 Go). Il est fourni en pièce jointe d'une
 **Release** GitHub et s'ajoute manuellement :
 
 1. Télécharger l'archive `fr-pack.zip` depuis les Releases du dépôt.
-2. Décompresser et placer le dossier dans `assets/` :
+2. Décompresser : l'archive contient déjà le dossier `assets/` (plus un
+   `README.txt` de notice). Placer ce dossier `assets/` à côté de l'application :
 
    ```
    assets/

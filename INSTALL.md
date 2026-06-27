@@ -29,15 +29,17 @@ Depuis les **Releases** du dépôt https://github.com/Mediatros/Jactance :
 
 ```bash
 unzip Jactance.app.zip                 # -> Jactance.app
-unzip fr-pack.zip -d assets/           # -> assets/fr-pack/
+unzip fr-pack.zip                      # -> assets/fr-pack/ (+ README.txt)
 ```
 
-Disposer l'app et le pack côte à côte (le pack doit être dans le dossier qui
-contient l'app) :
+Le zip du pack contient déjà le dossier `assets/` : après décompression, l'app
+et le pack sont côte à côte (le pack doit être dans le dossier qui contient
+l'app) :
 
 ```
 DictéeLocale/
 ├── Jactance.app
+├── README.txt          (notice du pack)
 └── assets/
     └── fr-pack/
 ```
@@ -56,23 +58,26 @@ passer à la **Voie 2**.
 ## Voie 2 — Build local (Mac managé / airgap)
 
 ```bash
-unzip jactance-kit.zip                 # -> dossier Jactance/
-unzip fr-pack.zip -d Jactance/assets/  # -> Jactance/assets/fr-pack/
+unzip jactance-kit.zip          # -> dossier Jactance/
 cd Jactance
-./install_offline.sh   # crée le venv et installe les dépendances (aucun réseau)
-./build_app.sh         # construit dist/Jactance.app localement
+./install_offline.sh            # crée le venv et installe les dépendances (aucun réseau)
+./build_app.sh                  # construit dist/Jactance.app localement
+unzip ../fr-pack.zip -d dist/   # -> dist/assets/fr-pack/, à côté de l'app
 ```
 
-Placer le pack à côté de l'app buildée (`dist/assets/fr-pack/`), puis ouvrir
-`dist/Jactance.app`. Le build local évite la quarantaine, donc pas de blocage
-ni d'admin.
+Le zip du pack contient déjà le dossier `assets/` ; décompressé dans `dist/`, le
+pack se retrouve directement à côté de l'app buildée (`dist/assets/fr-pack/`).
+Ouvrir ensuite `dist/Jactance.app`. Le build local évite la quarantaine, donc
+pas de blocage ni d'admin.
 
 > Les fichiers issus du téléchargement portent le tag quarantaine, mais cela ne
 > gêne ni `pip` ni Python : seules les **apps** lancées par LaunchServices sont
 > filtrées. L'app étant **construite sur place**, elle ne porte pas ce tag.
 
-Repli sans construire d'app : exécuter directement depuis les sources avec
-`./run.sh`.
+Repli sans construire d'app : exécuter depuis les sources avec `./run.sh`. Dans
+ce cas, décompresser le pack à la racine du projet (depuis `Jactance/` :
+`unzip ../fr-pack.zip`, ce qui crée `Jactance/assets/fr-pack/`) plutôt que dans
+`dist/`.
 
 ## Premier lancement
 
