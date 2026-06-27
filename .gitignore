@@ -21,6 +21,9 @@ vendor/
 # macOS
 .DS_Store
 
+# Préférence locale (micro choisi, lancement auto), écrite à côté de l'app
+jactance.prefs.json
+
 # Gestion de projet (MyProjectOS) — local uniquement, hors produit final
 CLAUDE.md
 PROJECT.md
