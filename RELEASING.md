@@ -67,16 +67,27 @@ git archive --format=tar HEAD | (mkdir -p "$STAGE" && tar -x -C "$STAGE")
 cp -R vendor/wheels vendor/build-wheels "$STAGE/vendor/"
 ( cd "$(dirname "$STAGE")" && zip -r -q -X jactance-kit.zip Jactance )
 
-# 3. App pré-buildée
-./install_offline.sh && ./build_app.sh
-( cd dist && zip -r -q -X Jactance.app.zip Jactance.app )
+# 3. App pré-buildée. Le venv doit être SANS torch (install_offline.sh installe
+#    en --no-deps, DEC-0013) : sinon PyInstaller embarque ~250 Mo inutiles.
+./install_offline.sh
+.venv/bin/python -c "import torch" 2>/dev/null \
+  && { echo "ABANDON : torch présent dans le venv, l'exclure (DEC-0013)"; exit 1; }
+./build_app.sh
+# Archiver le bundle avec ditto, jamais zip : zip suit les liens symboliques du
+# .app, ce qui casse sa structure et sa signature ad-hoc (app non lançable).
+ditto -c -k --keepParent --sequesterRsrc dist/Jactance.app Jactance.app.zip
 
 # 4. Publier (remplacer X.Y.Z)
 gh release create vX.Y.Z \
   "$(dirname "$STAGE")/jactance-kit.zip" \
-  dist/Jactance.app.zip \
+  Jactance.app.zip \
   --title "Jactance vX.Y.Z" --notes "..."
 ```
 
 Le kit est construit via `git archive` : il ne contient donc que le code suivi
 (ni modèle, ni fichiers de pilotage, ni `.git`/`.venv`).
+
+Deux règles permanentes pour l'asset Voie 1 (`Jactance.app.zip`), apprises en
+production : (1) archiver avec **`ditto`**, jamais `zip` (qui casse les
+symlinks du bundle) ; (2) builder depuis un venv **sans torch** (DEC-0013),
+sinon l'app double de taille.
