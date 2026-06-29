@@ -6,6 +6,8 @@ Le texte est nettoyé puis copié dans le presse-papiers (collage ⌘V manuel). 
 est local, aucun accès réseau, aucune permission admin (combo et Échap détectés
 par sondage d'état, voir src.hotkey.listener).
 """
+from __future__ import annotations
+
 import json
 import sys
 import threading
